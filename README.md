@@ -90,7 +90,7 @@ try{
 }
 ```
 
-## Kiedy jest rzucany warunek RPNException:
+## Kiedy jest rzucany wyjątek RPNException:
 * Gdy podamy błędną formułę.
 * Gdy podamy błędą formułę zmiennej/przedziału.
 * Gdy podamy wartość liczbową w bęłdnej postaci.
