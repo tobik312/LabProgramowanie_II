@@ -28,7 +28,7 @@ namespace LabProgramowanie_II
             try{
                 return Double.Parse(number,NumberStyles.Float,CultureInfo.CreateSpecificCulture("en-GB"));
             }catch{ 
-                throw new Exception("Podano błędą wartość liczbową: "+number);
+                throw new RPNException("Podano błędą wartość liczbową: "+number);
             }
         }
 
@@ -45,7 +45,7 @@ namespace LabProgramowanie_II
                     variables.Add(varName,var);
                 }
 
-            if(!isInfixNotation()) throw new Exception("Podano błędą formułę!");
+            if(!isInfixNotation()) throw new RPNException("Podano błędą formułę!");
         }
 
         public void setVariable(string name,EquationVariable variable){
@@ -75,6 +75,7 @@ namespace LabProgramowanie_II
                     bracketsCounter++;
                     stack.Push(token);
                 }else if(token==")"){
+                    if(bracketsCounter<=0) return false; 
                     while(stack.Peek()!="(")
                         equation.Push(stack.Pop());
                     stack.Pop();
@@ -180,7 +181,6 @@ namespace LabProgramowanie_II
                         else if(token=="*") a *= b;
                         else if(token=="/") a = b/a;
                         else if(token=="^") a = Math.Pow(b,a);
-                        //else throw error 
                     }
                     stack.Push(a);
                 }else if(Regex.IsMatch(token,@"[a-z]+")){
@@ -190,23 +190,12 @@ namespace LabProgramowanie_II
                         if(onVariableAsk!=null){
                             variables.Add(token,this.onVariableAsk(token));
                             stack.Push(variables[token].getValue());
-                        }//else throw error
+                        }else throw new RPNException("Nie ma zdarzenia obsługującego nieznaną zmienną.");
                     } 
                 }
             }
             if(stack.Count>0) return stack.Pop();
-            else return Double.NaN; //throw error
-        }
-
-        private void combine(EquationVariable[] tab,int idx){
-            for(int j=0;j<tab[idx].steps+1;j++){
-                tab[idx].next();
-                for(int z=0;z<tab.Length;z++){
-                    if(z==idx) continue;
-                    combine(tab,z);
-                }
-                tab[idx].reset();
-            }
+            else throw new RPNException("Nieznany błąd obliczeń!");
         }
 
         public void getValues(){

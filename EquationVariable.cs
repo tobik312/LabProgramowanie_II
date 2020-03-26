@@ -57,8 +57,7 @@ namespace LabProgramowanie_II
                 string[] splitedValue = Regex.Replace(varPair[1],@"[\(\)]","").Split(',');
                 return new EquationVariable(RPN.parseDouble(splitedValue[0]),RPN.parseDouble(splitedValue[1]),Int32.Parse(splitedValue[2]));
             }
-            //else throw syntaxError
-            return null;
+            else throw new RPNException("Błędny zapis formuły zmiennej");
         }
 
         public static EquationVariable getFromString(string variablePairSyntax){
