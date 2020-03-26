@@ -1,4 +1,4 @@
-# Reverse polish notation Csh
+# Reverse polish notation C#
 
 ## Opis funkcji i właściwości:
 
