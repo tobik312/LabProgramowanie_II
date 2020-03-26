@@ -92,7 +92,7 @@ try{
 
 ## Kiedy jest rzucany warunek RPNException:
 * Gdy podamy błędną formułę.
-* Gdy podamy będą formułę zmiennej/przedziału.
-* Gdy podamy wartość liczbową w będnej postaci.
+* Gdy podamy błędą formułę zmiennej/przedziału.
+* Gdy podamy wartość liczbową w bęłdnej postaci.
 * Gdy nie będziemy mieć przypisanego zdarzenia do nieznanej zmiennej.
 * Gdy wystąpi nieznany błąd obliczeń, spowodowany błędem algorytmu liczącego.
