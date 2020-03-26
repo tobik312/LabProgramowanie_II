@@ -1,10 +1,10 @@
-#Reverse polish notation Csh
+# Reverse polish notation Csh
 
-##Opis funkcji i właściwości:
+## Opis funkcji i właściwości:
 
-#####Obsługiwane zmienne matematyczne:
-*pi
-*e
+##### Obsługiwane zmienne matematyczne:
+* pi
+* e
 
 !! W podanej formule nie są rozróżniane wielkości znaków !!
 !! Nazwa zmiennej może składać się jedynie ze znaków alfabetu a-z !!
@@ -89,7 +89,7 @@ try{
 }
 ```
 
-##Kiedy jest rzucany warunek RPNException:
+## Kiedy jest rzucany warunek RPNException:
     * Gdy podamy błędną formułę
     * Gdy podamy będą formułę zmiennej/przedziału
     * Gdy podamy wartość liczbową w będnej postaci
