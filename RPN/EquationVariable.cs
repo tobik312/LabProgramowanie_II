@@ -1,9 +1,8 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace LabProgramowanie_II
-{
-   class EquationVariable{
+namespace LabProgramowanie_II.RPN{
+   public class EquationVariable{
         
         public bool isNumber {get;} = false;
         private double from;
@@ -13,6 +12,7 @@ namespace LabProgramowanie_II
         private double step;
         private int iterator;
         public EquationVariable(double from,double to,int steps){
+            if(double.IsNaN(from) || double.IsNaN(to) || steps<=0) throw new RPNException("Nie podano wszystkich wymaganych wartości!");
             this.from = Math.Min(from,to);
             this.to = Math.Max(from,to);
             this.steps = steps;
@@ -20,6 +20,7 @@ namespace LabProgramowanie_II
         }
 
         public EquationVariable(double number){
+            if(double.IsNaN(number)) throw new RPNException("Nie podano wszystkich wymaganych wartości!");
             this.number = number;
             this.isNumber = true;
             this.steps = 1;
@@ -46,8 +47,8 @@ namespace LabProgramowanie_II
         //x:value, x:(from,to,steps)
         public static EquationVariable getFromString(string variablePairSyntax,out string variableName){
             string[] varPair = variablePairSyntax.Split(':');
-            if(varPair.Length>2) throw new Exception("Błędny zapis formuły zmiennej");
-            if(!Regex.IsMatch(varPair[0],@"([a-z]+)")) throw new Exception("Błędny zapis formuły zmiennej");
+            if(varPair.Length>2) throw new RPNException("Błędny zapis formuły zmiennej");
+            if(!Regex.IsMatch(varPair[0],@"([a-z]+)")) throw new RPNException("Błędny zapis formuły zmiennej");
             variableName = varPair[0];
             if(Regex.IsMatch(varPair[1],@"^((\d*)(\.)?(\d+))$")){
                 return RPN.parseDouble(varPair[1]);

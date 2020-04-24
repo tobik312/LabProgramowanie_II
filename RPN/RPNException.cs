@@ -1,7 +1,6 @@
 using System;
 
-namespace LabProgramowanie_II
-{
+namespace LabProgramowanie_II.RPN{
 
     class RPNException : Exception{
 

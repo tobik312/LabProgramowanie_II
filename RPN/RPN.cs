@@ -3,8 +3,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 
-namespace LabProgramowanie_II
-{
+namespace LabProgramowanie_II.RPN{
     delegate EquationVariable VariableAsk(string variableName);
     class RPN{
         public event VariableAsk onVariableAsk;
@@ -33,10 +32,11 @@ namespace LabProgramowanie_II
         }
 
         public RPN(string formula){
+            if(formula==null) throw new RPNException("Nie podano wszystkich wymaganych wartości!");
             formula = Regex.Replace(formula,@"\s+","").ToLower();
             formula = formula.Replace("--","+");
             Match variablesBrackets = variableBracketsReg.Match(formula);
-            this.formula = '('+(variablesBrackets.Success ? formula.Substring(0,variablesBrackets.Index) : formula)+')';
+            this.formula = "("+(variablesBrackets.Success ? formula.Substring(0,variablesBrackets.Index) : formula)+")";
 
             if(variablesBrackets.Success)
                 foreach(string varPair in EquationVariable.getPairs(variablesBrackets.Value)){
@@ -101,6 +101,7 @@ namespace LabProgramowanie_II
                         syntax++;
                         syntax %= 2;
                     }
+                    if(syntax==0) return false;
                 }else stack.Push(token);
             }
             if(bracketsCounter!=0) return false;
@@ -111,7 +112,7 @@ namespace LabProgramowanie_II
             MatchCollection matchesTokens = Regex.Matches(this.formula,@"\(|\)|\^|\*|\/|\+|\-|(abs)|(cos)|(exp)|(log)|(sin)|(sqrt)|(tan)|(cosh)|(sinh)|(tanh)|(acos)|(asin)|(atan)|([a-z]+)|((\d*)(\.)?(\d+))");
             if(matchesTokens==null) return null;
             Queue<string> tokensQueue = new Queue<string>();
-            for(int i=1;i<matchesTokens.Count-1;i++){
+            for(int i=0;i<matchesTokens.Count;i++){
                 if(matchesTokens[i].Value=="-"){
                     string before = matchesTokens[i-1].Value;
                     string after = matchesTokens[i+1].Value;
@@ -198,13 +199,17 @@ namespace LabProgramowanie_II
             else throw new RPNException("Nieznany błąd obliczeń!");
         }
 
-        public void getValues(){
-            
+        public RPNResult[] getValues(){
+            if(!variables.ContainsKey("x")) throw new RPNException("Nie zdefiniowano zmiennej x.");
+            RPNResult[] results = new RPNResult[variables["x"].steps];
             for(int i=0;i<variables["x"].steps;i++){
-                Console.WriteLine("{0} => {1}",variables["x"].getValue(),getValue());
+                results[i] = new RPNResult();
+                results[i].x = variables["x"].getValue();
+                results[i].y = this.getValue();
                 variables["x"].next();
             }
             variables["x"].reset();
+            return results;
         }
 
     }
