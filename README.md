@@ -97,43 +97,43 @@ try{
 * Gdy nie będziemy mieć przypisanego zdarzenia do nieznanej zmiennej.
 * Gdy wystąpi nieznany błąd obliczeń, spowodowany błędem algorytmu liczącego.
 
-#Docker usage
+# Docker usage
 
-##RestAPI
+## RestAPI
 
 Default port 5000
 
-###Build image
+### Build image
 ```
 docker build -t rpn-api API
 ```
 
-###Create container & run
+### Create container & run
 ```
 docker run -p 5000:5000 --name rpn-api-container -d rpn-api
 ```
 
-###Using container
+### Using container
 ```
 docker start rpn-api-container
 docker stop rpn-api-container
 ```
 
-##ReactJS-app
+## ReactJS-app
 
 Default port 80
 
-###Build image
+### Build image
 ```
 docker build -t rpn-app APP
 ```
 
-###Create container & run
+### Create container & run
 ```
 docker run -p 80:80 --name rpn-app-container -d rpn-app
 ```
 
-###Using container
+### Using container
 ```
 docker start rpn-app-container
 docker stop rpn-app-container
