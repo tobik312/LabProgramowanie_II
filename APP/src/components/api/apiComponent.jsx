@@ -42,8 +42,6 @@ class APIComponent extends React.Component{
 		else if(type==='xy'){
 			if(this.state.mounted)
 				url += `calculate/xy?from=${this.state.from}&to=${this.state.to}&n=${this.state.n}&`;
-			else
-				url += `calculate/xy?from=${xValue-10}&to=${xValue+10}&n=200&`;
 		}
 
 		url+=`formula=${encodeURIComponent(this.props.equation)}`;

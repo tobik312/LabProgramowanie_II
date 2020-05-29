@@ -36,6 +36,12 @@ function Instruction(){
                 <li>W podanej formule nie są rozróżniane wielkości znaków.</li>
                 <li>Nazwa zmiennej może składać się jedynie ze znaków alfabetu a-z.</li>
             </ul>
+            <br/>
+            <h5>Polecam tych panów:</h5>
+            <ul>
+                <li><a href="https://github.com/recharts/recharts">{'<Recharts/>'}</a></li>
+                <li><a href="https://github.com/davidchin/react-input-range">react-input-range</a></li>
+            </ul>
         </Card>
     );
 }

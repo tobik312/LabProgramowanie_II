@@ -1,5 +1,5 @@
 import React from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
 
@@ -10,12 +10,11 @@ import APIComponent from './apiComponent.jsx';
 class ChartView extends APIComponent{
 
     state = {
-        n: 200,
-        load: false
-    };
+        load: false,
+        n: 200
+    }
 
-    load(){
-        this.loadData('xy');
+    renewStateValues(){
         let variables = APIComponent.getVariables(this.props.equation);
         let xValue = (variables.x!==undefined) ? variables.x : 0;
         this.setState({
@@ -23,13 +22,24 @@ class ChartView extends APIComponent{
             to: xValue+10,
             fromTxt: (xValue-10).toString(),
             toTxt: (xValue+10).toString(),
-            mounted: true
+            mounted: true,
+            reload: true
         });
+    }
+
+    componentDidMount(prevProps,prevState){
+        this.renewStateValues();
+    }
+
+    componentDidUpdate(prevProps,prevState){
+        if(prevProps.equation!==this.props.equation)
+            this.renewStateValues();
+        if(prevState.reload!==this.state.reload)
+            this.loadData('xy');
     }
 
     reload = ()=>{
         this.setState({reload: true});
-        this.loadData('xy');
     }
 
     setRanges = (e)=>{
@@ -58,21 +68,23 @@ class ChartView extends APIComponent{
         if(this.state.load){
             if(!this.state.reload){
                 let chartData = this.state.xy;
-                chartData = chartData.map(value=> ({x: "x: "+value.x.toFixed(2),y: value.y}));
+                chartData = chartData.map(value=> ({x: value.x.toFixed(2),y: value.y}));
                 chart = (
-                    <LineChart className="centerFixed" width={600} height={400} data={chartData}>
-                        <Line type="monotone" dataKey="y" stroke="#009FE3" />
-                        <CartesianGrid stroke="#ccc" strokeDasharray="5 5"/>
-                        <XAxis dataKey="x"/>
-                        <YAxis />
-                        <Tooltip />
-                    </LineChart>
+                    <ResponsiveContainer width="100%" aspect={2}>
+                        <LineChart className="centerFixed" data={chartData}>
+                            <CartesianGrid stroke="#ccc" strokeDasharray="5 5"/>
+                            <XAxis dataKey="x"/>
+                            <YAxis />
+                            <Tooltip />
+                            <Line isAnimationActive={false} type="monotone" dataKey="y" stroke="#009FE3" dot={{ r: 2 }} activeDot={{ r: 4 }} />
+                        </LineChart>
+                    </ResponsiveContainer>
                 );
             }
             chartBody = (
                 <div className="s-row">
                     <h5>Wykres funkcji:</h5>
-                    <div className="s-col s-large--2">
+                    <div className="s-col s-small--12 s-large--2">
                         Wartość początkowa: <input onBlur={this.checkValue} onChange={this.setRanges} name="from" className="s-field" value={this.state.fromTxt} type="text" /><br/>
                         Wartość końcowa: <input onBlur={this.checkValue} onChange={this.setRanges} name="to" className="s-field" value={this.state.toTxt} type="text" /><br/>
                         Ilość kroków: {this.state.n}
@@ -82,7 +94,9 @@ class ChartView extends APIComponent{
                         <br/>
                         <button onClick={this.reload} className="s-button--secondary">Odśwież</button>
                     </div>
-                    {chart}
+                    <div className="s-col s-small--12 s-medium--12 s-large--10">
+                        {chart}
+                    </div>
                 </div>
 			);
         }
