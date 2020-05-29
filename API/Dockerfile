@@ -1,10 +1,10 @@
 #Build mvc-api
 FROM mcr.microsoft.com/dotnet/core/sdk:2.1 as build-env
 WORKDIR /api
-COPY ./API/*.csproj ./
+COPY *.csproj ./
 RUN dotnet restore
 
-COPY ./API/. ./
+COPY . ./
 RUN dotnet publish -c Release -o out
 
 #Run api on port 5000

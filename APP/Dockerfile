@@ -1,8 +1,8 @@
 #Build reactJS-app
 FROM mhart/alpine-node:12 AS builder
 WORKDIR /app
-COPY ./APP/. .
-RUN npm install
+COPY . ./
+RUN npm install --silent
 RUN npm run build
 
 #Run app on port 80

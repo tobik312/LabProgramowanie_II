@@ -96,3 +96,45 @@ try{
 * Gdy podamy wartość liczbową w bęłdnej postaci.
 * Gdy nie będziemy mieć przypisanego zdarzenia do nieznanej zmiennej.
 * Gdy wystąpi nieznany błąd obliczeń, spowodowany błędem algorytmu liczącego.
+
+#Docker usage
+
+##RestAPI
+
+Default port 5000
+
+###Build image
+```
+docker build -t rpn-api API
+```
+
+###Create container & run
+```
+docker run -p 5000:5000 --name rpn-api-container -d rpn-api
+```
+
+###Using container
+```
+docker start rpn-api-container
+docker stop rpn-api-container
+```
+
+##ReactJS-app
+
+Default port 80
+
+###Build image
+```
+docker build -t rpn-app APP
+```
+
+###Create container & run
+```
+docker run -p 80:80 --name rpn-app-container -d rpn-app
+```
+
+###Using container
+```
+docker start rpn-app-container
+docker stop rpn-app-container
+```
