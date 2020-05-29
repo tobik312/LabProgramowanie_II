@@ -9,11 +9,15 @@ namespace LabProgramowanie_II
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseCors(
+                options => options.WithOrigins("*").WithMethods("GET")
+            );
             app.UseMvc();
         }
     }

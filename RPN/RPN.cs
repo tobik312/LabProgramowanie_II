@@ -8,7 +8,7 @@ namespace LabProgramowanie_II.RPN{
     class RPN{
         public event VariableAsk onVariableAsk;
         private static Dictionary<string,int> priorityWeight = new Dictionary<string, int>(){
-            {"abs",4},{"cos",4},{"exp",4},{"log",4},{"sin",4},{"sqrt",4},{"tan",4},{"tanh",4},{"acos",4},{"asin",4},{"atan",4},
+            {"abs",4},{"cos",4},{"exp",4},{"log",4},{"sin",4},{"sqrt",4},{"tan",4},{"tanh",4},{"sinh",4},{"acos",4},{"asin",4},{"atan",4},
             {"^",3},
             {"*",2},{"/",2},
             {"+",1},{"-",1},
@@ -109,7 +109,7 @@ namespace LabProgramowanie_II.RPN{
         }
 
         public string[] getTokens(){
-            MatchCollection matchesTokens = Regex.Matches(this.formula,@"\(|\)|\^|\*|\/|\+|\-|(abs)|(cos)|(exp)|(log)|(sin)|(sqrt)|(tan)|(cosh)|(sinh)|(tanh)|(acos)|(asin)|(atan)|([a-z]+)|((\d*)(\.)?(\d+))");
+            MatchCollection matchesTokens = Regex.Matches(this.formula,@"\(|\)|\^|\*|\/|\+|\-|(abs)|(cos)|(exp)|(log)|(sinh)|(sin)|(sqrt)|(tanh)|(tan)|(cosh)|(acos)|(asin)|(atan)|([a-z]+)|((\d*)(\.)?(\d+))");
             if(matchesTokens==null) return null;
             Queue<string> tokensQueue = new Queue<string>();
             for(int i=0;i<matchesTokens.Count;i++){
