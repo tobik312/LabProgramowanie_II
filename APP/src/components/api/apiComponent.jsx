@@ -31,7 +31,7 @@ class APIComponent extends React.Component{
     }
 
     loadData(type){
-		let url = "http://localhost:5000/api/";
+		let url = `http://${window.location.hostname}:5000/api/`;
 		let variables = APIComponent.getVariables(this.props.equation);
 		let xValue = (variables.x!==undefined) ? variables.x : 0;
 
